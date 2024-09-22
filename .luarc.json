@@ -1,0 +1,3 @@
+{
+  "diagnostics.globals": ["vim", "mason_registry"]
+}
