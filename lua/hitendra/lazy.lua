@@ -16,4 +16,14 @@ require("lazy").setup({ { import = "hitendra.plugins" }, { import = "hitendra.pl
 	change_detection = {
 		notify = false,
 	},
+	-- ui config
+	ui = {
+		border = "rounded",
+		title = " ⚡",
+		title_pos = "left",
+		size = {
+			width = 0.8,
+			height = 0.8,
+		},
+	},
 })
