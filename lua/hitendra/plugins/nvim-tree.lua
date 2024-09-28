@@ -41,6 +41,7 @@ return {
 			git = {
 				enable = true,
 				show_on_dirs = true,
+				timeout = 3000,
 			},
 			update_focused_file = {
 				enable = true,

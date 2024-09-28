@@ -4,12 +4,18 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- easy insert to normal mode
 vim.keymap.set("i", "jj", "<Esc>")
 -- vim.keymap.set("n", "<leader>pv", ":Ex<CR>")
+
+-- cut line in insert mode
 vim.keymap.set("i", "<C-x>", function()
 	vim.api.nvim_command("normal! dd")
 end, { noremap = true })
 
 -- select all made easy
 vim.keymap.set("n", "<C-a>", "ggVG")
+
+-- indent in viaual mode without losing selection
+vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '>', '>gv', { noremap = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })

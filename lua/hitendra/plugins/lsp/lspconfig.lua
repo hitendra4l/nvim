@@ -17,6 +17,7 @@ return {
 
 		local opts = { noremap = true, silent = true }
 
+
 		local on_attach = function(_, bufnr)
 			opts.buffer = bufnr
 
@@ -103,6 +104,11 @@ return {
 		lspconfig["ts_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			init_options = {
+				preferences = {
+					disableSuggestions = true
+				}
+			},
 			settings = {
 				javascript = {
 					suggest = {
@@ -181,6 +187,9 @@ return {
 		})
 
 		-- Angular Language Server configuration
+
+		local util = require("lspconfig.util")
+
 		local angularls_path = mason_registry.get_package("angular-language-server"):get_install_path()
 
 		local cmd = {
@@ -192,13 +201,43 @@ return {
 			table.concat({ angularls_path .. "/node_modules/@angular/language-server", vim.loop.cwd() }, ","),
 		}
 
+		-- Custom root_dir function
+		local root_files = {
+			"angular.json", -- standard Angular config
+			"workspace.json", -- Nx monorepos can use this instead of angular.json
+			"nx.json",     -- Nx root config
+			"project.json" -- individual project config
+		}
+
 		lspconfig["angularls"].setup({
 			cmd = cmd,
 			capabilities = capabilities,
 			on_attach = on_attach,
+			root_dir = function(fname)
+				return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+			end,
 			on_new_config = function(new_config, _)
 				new_config.cmd = cmd
 			end,
 		})
+
+
+		-- local angularls_path = mason_registry.get_package("angular-language-server"):get_install_path()
+		-- local cmd = {
+		-- 	"ngserver",
+		-- 	"--stdio",
+		-- 	"--tsProbeLocations",
+		-- 	table.concat({ angularls_path, vim.loop.cwd() }, ","),
+		-- 	"--ngProbeLocations",
+		-- 	table.concat({ angularls_path .. "/node_modules/@angular/language-server", vim.loop.cwd() }, ","),
+		-- }
+		-- lspconfig["angularls"].setup({
+		-- 	cmd = cmd,
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- 	on_new_config = function(new_config, _)
+		-- 		new_config.cmd = cmd
+		-- 	end,
+		-- })
 	end,
 }
