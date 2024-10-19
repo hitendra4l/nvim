@@ -1,3 +1,4 @@
 {
-  "diagnostics.globals": ["vim", "mason_registry"]
+  "diagnostics.globals": ["vim", "mason_registry",
+        "root_pattern"]
 }

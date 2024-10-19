@@ -4,9 +4,11 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
+		{ 'j-hui/fidget.nvim',                   opts = {} },
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
+		local util = require("lspconfig.util")
 		local mason_registry = require("mason-registry")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -108,6 +110,7 @@ return {
 		lspconfig["ts_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			cmd = { "typescript-language-server", "--stdio" },
 			init_options = {
 				preferences = {
 					disableSuggestions = true
@@ -144,6 +147,12 @@ return {
 		lspconfig["tailwindcss"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			filetypes = { "html", "htmlangular", "css", "less", "postcss", "sass", "scss", "javascriptreact", "typescriptreact", },
+			root_dir = util.root_pattern('tailwind.config.js',
+				'tailwind.config.cjs',
+				'tailwind.config.mjs',
+				'tailwind.config.ts'
+			),
 		})
 
 		lspconfig["emmet_ls"].setup({
@@ -197,8 +206,6 @@ return {
 		})
 
 		-- Angular Language Server configuration
-
-		local util = require("lspconfig.util")
 
 		local angularls_path = mason_registry.get_package("angular-language-server"):get_install_path()
 
