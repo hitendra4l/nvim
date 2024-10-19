@@ -4,14 +4,14 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		-- { "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
-
 		local mason_registry = require("mason-registry")
-
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+		-- Add border to LspInfo window
+		require('lspconfig.ui.windows').default_options.border = 'rounded'
 
 		local keymap = vim.keymap -- for conciseness
 
@@ -58,11 +58,15 @@ return {
 
 			-- jump to next diagnostic in buffer
 			opts.desc = "Go to next diagnostic"
-			keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, opts)
+			keymap.set("n", "<leader>dn", function()
+				vim.diagnostic.jump({ count = 1, float = true })
+			end, opts)
 
 			-- jump to previous diagnostic in buffer
 			opts.desc = "Go to previous diagnostic"
-			keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, opts)
+			keymap.set("n", "<leader>dp", function()
+				vim.diagnostic.jump({ count = -1, float = true })
+			end, opts)
 
 			-- list all of the diagnostics in the buffer using Telescope
 			opts.desc = "Show buffer diagnostics"
@@ -128,6 +132,12 @@ return {
 						unknownAtRules = "ignore",
 					}
 				},
+				less = {
+					validate = true
+				},
+				scss = {
+					validate = true
+				},
 			},
 		})
 
@@ -139,7 +149,7 @@ return {
 		lspconfig["emmet_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-			filetypes = { "html", "typescriptreact", "javascriptreact", "css" },
+			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "htmlangular" },
 		})
 
 		lspconfig["lua_ls"].setup({
@@ -196,9 +206,9 @@ return {
 			"ngserver",
 			"--stdio",
 			"--tsProbeLocations",
-			table.concat({ angularls_path, vim.loop.cwd() }, ","),
+			table.concat({ angularls_path, vim.fn.getcwd() }, ","),
 			"--ngProbeLocations",
-			table.concat({ angularls_path .. "/node_modules/@angular/language-server", vim.loop.cwd() }, ","),
+			table.concat({ angularls_path .. "/node_modules/@angular/language-server", vim.fn.getcwd() }, ","),
 		}
 
 		-- Custom root_dir function

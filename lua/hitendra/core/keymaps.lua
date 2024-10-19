@@ -18,7 +18,7 @@ vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '>', '>gv', { noremap = true, silent = true })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickfix list" })
 
 -- split window navigation
 vim.keymap.set("n", "<C-Left>", "<C-w>h")
@@ -29,7 +29,7 @@ vim.keymap.set("n", "<C-Right>", "<C-w>l")
 -- split windows
 vim.keymap.set("n", "<leader>sv", "<cmd>vs<CR>")
 vim.keymap.set("n", "<leader>sh", "<cmd>split<CR>")
-vim.keymap.set("n", "<leader>sc", "<cmd>wq<CR>")
+vim.api.nvim_set_keymap('n', '<C-w>H', ':wincmd H<CR>:vertical resize 40<CR>', { noremap = true, silent = true })
 
 -------------------- Move Lines -----------------------
 -- Move selected multiple lines

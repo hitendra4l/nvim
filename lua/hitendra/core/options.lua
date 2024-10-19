@@ -45,7 +45,6 @@ vim.opt.updatetime = 500
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.o.equalalways = false
 
 -- vim.opt.list = true
 -- vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
@@ -62,16 +61,28 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Autocommand for quickfix list
+vim.api.nvim_create_autocmd("FileType", {
+	desc = "Close NvimTree and resize when opening quickfix list",
+	group = vim.api.nvim_create_augroup("QuickfixResize", { clear = true }),
+	pattern = "qf",
+	callback = function()
+		-- vim.cmd("NvimTreeClose")
+		vim.cmd("wincmd L")
+		vim.cmd("vertical resize 40")
+		vim.cmd("set winfixwidth")
+	end,
+})
 
 
 ------------------------------ border on suggestions ------------------------------------
 local lsp = vim.lsp
 lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 	border = "rounded",
-})
+}
+)
 
-
------------------------------- border on diagnostics ------------------------------------
+---------------------------- border on diagnostics ------------------------------------
 local api = vim.api
 local diagnostic = vim.diagnostic
 api.nvim_create_autocmd("CursorHold", {

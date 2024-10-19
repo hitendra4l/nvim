@@ -19,7 +19,7 @@ require("lazy").setup({ { import = "hitendra.plugins" }, { import = "hitendra.pl
 	-- ui config
 	ui = {
 		border = "rounded",
-		title = " ⚡",
+		title = "⚡",
 		title_pos = "left",
 		size = {
 			width = 0.8,
