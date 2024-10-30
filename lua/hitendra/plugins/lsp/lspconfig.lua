@@ -4,7 +4,7 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ 'j-hui/fidget.nvim',                   opts = {} },
+		{ "j-hui/fidget.nvim", opts = {} },
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
@@ -13,12 +13,11 @@ return {
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		-- Add border to LspInfo window
-		require('lspconfig.ui.windows').default_options.border = 'rounded'
+		require("lspconfig.ui.windows").default_options.border = "rounded"
 
 		local keymap = vim.keymap -- for conciseness
 
 		local opts = { noremap = true, silent = true }
-
 
 		local on_attach = function(_, bufnr)
 			opts.buffer = bufnr
@@ -110,19 +109,20 @@ return {
 		lspconfig["ts_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-			cmd = { "typescript-language-server", "--stdio" },
+			-- cmd = { "typescript-language-server", "--stdio" },
+			-- version = "/home/hitendra/.local/share/nvim/mason/bin/typescript-language-server --version",
 			init_options = {
 				preferences = {
-					disableSuggestions = true
-				}
+					disableSuggestions = true,
+				},
 			},
 			settings = {
 				javascript = {
 					suggest = {
-						enabled = true
-					}
-				}
-			}
+						enabled = true,
+					},
+				},
+			},
 		})
 
 		lspconfig["cssls"].setup({
@@ -133,27 +133,43 @@ return {
 					validate = true,
 					lint = {
 						unknownAtRules = "ignore",
-					}
+					},
 				},
 				less = {
-					validate = true
+					validate = true,
 				},
 				scss = {
-					validate = true
+					validate = true,
 				},
 			},
 		})
 
-		lspconfig["tailwindcss"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "html", "htmlangular", "css", "less", "postcss", "sass", "scss", "javascriptreact", "typescriptreact", },
-			root_dir = util.root_pattern('tailwind.config.js',
-				'tailwind.config.cjs',
-				'tailwind.config.mjs',
-				'tailwind.config.ts'
-			),
-		})
+		------- Custom root_dir function
+		-- local tailwindcss_root_files = {
+		-- 	"tailwind.config.js",
+		-- 	"tailwind.config.cjs",
+		-- 	"tailwind.config.mjs",
+		-- 	"tailwind.config.ts",
+		-- }
+		-- lspconfig["tailwindcss"].setup({
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- 	filetypes = {
+		-- 		"html",
+		-- 		"htmlangular",
+		-- 		"css",
+		-- 		"less",
+		-- 		"postcss",
+		-- 		"sass",
+		-- 		"scss",
+		-- 		"javascriptreact",
+		-- 		"typescriptreact",
+		-- 	},
+		-- 	root_dir = function(fname)
+		-- 		-- Use root_pattern to detect Tailwind config files and fallback to the git ancestor
+		-- 		return util.root_pattern(unpack(tailwindcss_root_files))(fname) or util.find_git_ancestor(fname)
+		-- 	end,
+		-- })
 
 		lspconfig["emmet_ls"].setup({
 			capabilities = capabilities,
@@ -219,11 +235,11 @@ return {
 		}
 
 		-- Custom root_dir function
-		local root_files = {
+		local angularls_root_files = {
 			"angular.json", -- standard Angular config
 			"workspace.json", -- Nx monorepos can use this instead of angular.json
-			"nx.json",     -- Nx root config
-			"project.json" -- individual project config
+			"nx.json", -- Nx root config
+			"project.json", -- individual project config
 		}
 
 		lspconfig["angularls"].setup({
@@ -231,30 +247,11 @@ return {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			root_dir = function(fname)
-				return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+				return util.root_pattern(unpack(angularls_root_files))(fname) or util.find_git_ancestor(fname)
 			end,
 			on_new_config = function(new_config, _)
 				new_config.cmd = cmd
 			end,
 		})
-
-
-		-- local angularls_path = mason_registry.get_package("angular-language-server"):get_install_path()
-		-- local cmd = {
-		-- 	"ngserver",
-		-- 	"--stdio",
-		-- 	"--tsProbeLocations",
-		-- 	table.concat({ angularls_path, vim.loop.cwd() }, ","),
-		-- 	"--ngProbeLocations",
-		-- 	table.concat({ angularls_path .. "/node_modules/@angular/language-server", vim.loop.cwd() }, ","),
-		-- }
-		-- lspconfig["angularls"].setup({
-		-- 	cmd = cmd,
-		-- 	capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- 	on_new_config = function(new_config, _)
-		-- 		new_config.cmd = cmd
-		-- 	end,
-		-- })
 	end,
 }

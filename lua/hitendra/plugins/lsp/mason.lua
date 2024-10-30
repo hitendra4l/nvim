@@ -21,15 +21,16 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
-				"angularls",
-				"rust_analyzer",
+				"gopls",
+				"pyright",
 				"html",
+				"ts_ls",
 				"cssls",
 				"tailwindcss",
-				"lua_ls",
 				"emmet_ls",
-				"pyright",
-				"ts_ls",
+				"lua_ls",
+				"rust_analyzer",
+				"angularls",
 			},
 			automatic_installation = true,
 		})

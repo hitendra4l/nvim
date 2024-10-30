@@ -74,45 +74,43 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-
 ------------------------------ border on suggestions ------------------------------------
 local lsp = vim.lsp
 lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 	border = "rounded",
-}
-)
-
----------------------------- border on diagnostics ------------------------------------
-local api = vim.api
-local diagnostic = vim.diagnostic
-api.nvim_create_autocmd("CursorHold", {
-	callback = function()
-		local float_opts = {
-			focusable = false,
-			close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-			border = "rounded",
-			source = "always", -- show source in diagnostic popup window
-			prefix = " ",
-		}
-
-		if not vim.b.diagnostics_pos then
-			vim.b.diagnostics_pos = { nil, nil }
-		end
-
-		local cursor_pos = api.nvim_win_get_cursor(0)
-		if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
-				and #diagnostic.get() > 0
-		then
-			diagnostic.open_float(nil, float_opts)
-		end
-
-		vim.b.diagnostics_pos = cursor_pos
-	end,
 })
 
-vim.diagnostic.config {
+---------------------------- border on diagnostics ------------------------------------
+-- local api = vim.api
+-- local diagnostic = vim.diagnostic
+-- api.nvim_create_autocmd("CursorHold", {
+-- 	callback = function()
+-- 		local float_opts = {
+-- 			focusable = false,
+-- 			close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+-- 			border = "rounded",
+-- 			source = "always", -- show source in diagnostic popup window
+-- 			prefix = " ",
+-- 		}
+--
+-- 		if not vim.b.diagnostics_pos then
+-- 			vim.b.diagnostics_pos = { nil, nil }
+-- 		end
+--
+-- 		local cursor_pos = api.nvim_win_get_cursor(0)
+-- 		if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
+-- 				and #diagnostic.get() > 0
+-- 		then
+-- 			diagnostic.open_float(nil, float_opts)
+-- 		end
+--
+-- 		vim.b.diagnostics_pos = cursor_pos
+-- 	end,
+-- })
+
+vim.diagnostic.config({
 	float = { border = "rounded" },
-}
+})
 
 -- ---------------------- cursor in center near EOF ------------------------------
 vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter" }, {
@@ -120,8 +118,8 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter" }, {
 	callback = function()
 		local win_h = vim.api.nvim_win_get_height(0)
 		local off = math.min(vim.o.scrolloff, math.floor(win_h / 2))
-		local dist = vim.fn.line "$" - vim.fn.line "."
-		local rem = vim.fn.line "w$" - vim.fn.line "w0" + 1
+		local dist = vim.fn.line("$") - vim.fn.line(".")
+		local rem = vim.fn.line("w$") - vim.fn.line("w0") + 1
 		if dist < off and win_h - rem + dist < off then
 			local view = vim.fn.winsaveview()
 			view.topline = view.topline + off - (win_h - rem + dist)

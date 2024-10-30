@@ -14,8 +14,8 @@ end, { noremap = true })
 vim.keymap.set("n", "<C-a>", "ggVG")
 
 -- indent in viaual mode without losing selection
-vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '>', '>gv', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickfix list" })
@@ -29,7 +29,14 @@ vim.keymap.set("n", "<C-Right>", "<C-w>l")
 -- split windows
 vim.keymap.set("n", "<leader>sv", "<cmd>vs<CR>")
 vim.keymap.set("n", "<leader>sh", "<cmd>split<CR>")
-vim.api.nvim_set_keymap('n', '<C-w>H', ':wincmd H<CR>:vertical resize 40<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-w>H", ":wincmd H<CR>:vertical resize 40<CR>", { noremap = true, silent = true })
+
+-- Tab navigation
+vim.keymap.set("n", "<A-h>", ":tabprevious<CR>")
+vim.keymap.set("n", "<A-l>", ":tabnext<CR>")
+vim.keymap.set("n", "<A-Left>", ":-tabmove<CR>") -- Move tab left
+vim.keymap.set("n", "<A-Right>", ":+tabmove<CR>") -- Move tab right
+vim.keymap.set("n", "<A-w>", ":tabclose<CR>")
 
 -------------------- Move Lines -----------------------
 -- Move selected multiple lines
@@ -44,12 +51,11 @@ vim.api.nvim_set_keymap("n", "<A-j>", ":m .+1<CR>==", { noremap = true, silent =
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
-
 ------------------- Navigate in wrapped lines ---------------
 -- Combined normal and visual mode mappings
-vim.keymap.set({ 'n', 'v' }, '<Down>', 'gj')
-vim.keymap.set({ 'n', 'v' }, '<Up>', 'gk')
+vim.keymap.set({ "n", "v" }, "<Down>", "gj")
+vim.keymap.set({ "n", "v" }, "<Up>", "gk")
 
 -- Insert mode mappings
-vim.keymap.set('i', '<Down>', '<C-o>gj')
-vim.keymap.set('i', '<Up>', '<C-o>gk')
+vim.keymap.set("i", "<Down>", "<C-o>gj")
+vim.keymap.set("i", "<Up>", "<C-o>gk")
