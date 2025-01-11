@@ -1,0 +1,68 @@
+return {
+	-- "epwalsh/obsidian.nvim",
+	-- version = "*",
+	-- lazy = true,
+	-- ft = "markdown",
+	-- dependencies = {
+	-- 	"nvim-lua/plenary.nvim",
+	-- 	ft = { "markdown" },
+	-- 	{
+	-- 		"MeanderingProgrammer/render-markdown.nvim",
+	-- 		opts = {
+	-- 			enabled = false,
+	-- 			heading = { position = "inline", highlight_inline = "Normal" },
+	-- 			checkbox = {
+	-- 				checked = { scope_highlight = "@markup.strikethrough" },
+	-- 			},
+	-- 			quote = { repeat_linebreak = true },
+	-- 			win_options = {
+	-- 				showbreak = { default = "", rendered = "  " },
+	-- 				breakindent = { default = false, rendered = true },
+	-- 				breakindentopt = { default = "", rendered = "" },
+	-- 			},
+	-- 			pipe_table = { preset = "round", alignment_indicator = "┅" },
+	-- 			injections = {
+	-- 				gitcommit = {
+	-- 					enabled = false,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
+	-- opts = {
+	-- 	workspaces = {
+	-- 		{
+	-- 			name = "hitendra",
+	-- 			path = "/home/hitendra/notes/hitendra",
+	-- 		},
+	-- 	},
+	--
+	-- 	mappings = {
+	-- 		["gd"] = {
+	-- 			action = function()
+	-- 				return require("obsidian").util.gf_passthrough()
+	-- 			end,
+	-- 			opts = { desc = "Navigate to link inside vault", noremap = false, expr = true, buffer = true },
+	-- 		},
+	-- 	},
+	-- 	ui = {
+	-- 		enable = false,
+	-- 	},
+	--
+	-- 	note_id_func = function(title)
+	-- 		print(title)
+	-- 		local formatted_title = ""
+	-- 		if title ~= nil then
+	-- 			-- If title is given, transform it into valid file name.
+	-- 			formatted_title = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+	-- 		else
+	-- 			-- If title is nil, just add 4 random uppercase letters to the suffix.
+	-- 			for _ = 1, 4 do
+	-- 				formatted_title = formatted_title .. string.char(math.random(65, 90))
+	-- 			end
+	-- 		end
+	-- 		local date = tostring(os.date("%d-%b-%Y")):lower()
+	-- 		return formatted_title .. "_" .. date .. "_" .. tostring(os.time())
+	-- 	end,
+	-- },
+}

@@ -30,7 +30,7 @@ return {
 				"emmet_ls",
 				"lua_ls",
 				"rust_analyzer",
-				"angularls",
+				"angularls@17.2.2",
 			},
 			automatic_installation = true,
 		})

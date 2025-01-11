@@ -14,8 +14,17 @@ return {
 		local telescope = require("telescope")
 		-- "foo" --iglob **/test/**
 		local lga_actions = require("telescope-live-grep-args.actions")
+		local actions = require("telescope.actions")
 
 		telescope.setup({
+			defaults = {
+				mappings = {
+					i = {
+						["<C-j>"] = "move_selection_next",
+						["<C-k>"] = "move_selection_previous",
+					},
+				},
+			},
 			extensions = {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
@@ -24,11 +33,14 @@ return {
 					auto_quoting = true,
 					mappings = { -- extend mappings
 						i = {
-							["<C-k>"] = lga_actions.quote_prompt(),
-							["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+							-- ["<C-k>"] = lga_actions.quote_prompt(), -- just remove --iglob
+							-- add [P]ath
+							["<C-p>"] = lga_actions.quote_prompt({ postfix = " --iglob **" }),
+							-- [R]efine search
+							["<C-r>"] = actions.to_fuzzy_refine,
 						},
 					},
-				}
+				},
 			},
 		})
 
@@ -40,8 +52,12 @@ return {
 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
 		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-		vim.api.nvim_set_keymap('n', '<leader>so', '<cmd>Telescope lsp_references<CR>',
-			{ desc = "[S]earch [O]ccurence", noremap = true, silent = true })
+		vim.api.nvim_set_keymap(
+			"n",
+			"<leader>so",
+			"<cmd>Telescope lsp_references<CR>",
+			{ desc = "[S]earch [O]ccurence", noremap = true, silent = true }
+		)
 		-- vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
 		vim.keymap.set("n", "<leader>sg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })

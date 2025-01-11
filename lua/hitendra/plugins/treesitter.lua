@@ -1,7 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	main = "nvim-treesitter.configs",              -- Sets main module to use for opts
+	main = "nvim-treesitter.configs", -- Sets main module to use for opts
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects", -- Add textobjects as a dependency
 	},
@@ -10,7 +10,7 @@ return {
 		require("nvim-treesitter.install").compilers = { "zig", "clang", "gcc" }
 		require("nvim-treesitter.configs").setup({
 			matchup = {
-				enable = false, -- for matching-tag plugin true didn't work idk why?
+				enable = true, -- for matching-tag plugin true didn't work idk why?
 				disable = { "c", "ruby" },
 			},
 			ensure_installed = {
@@ -19,12 +19,13 @@ return {
 				"markdown",
 				"markdown_inline",
 			},
-			sync_install = false,       -- Sync installation of parsers
-			auto_install = true,        -- Autoinstall languages that are not installed
-			ignore_install = { "" },    -- List of parsers to ignore installing
+			sync_install = false, -- Sync installation of parsers
+			auto_install = true, -- Autoinstall languages that are not installed
+			ignore_install = { "" }, -- List of parsers to ignore installing
 			autopairs = { enable = true }, -- Enable autopairs
 			highlight = {
 				enable = true,
+				disable = { "markdown", "markdown_inline" },
 			},
 			indent = {
 				enable = true,
@@ -43,16 +44,16 @@ return {
 						["ic"] = "@class.inner",
 					},
 				},
-				swap = {
-					enable = true,
-					-- Keymaps to swap parameters inside function
-					swap_next = {
-						["<leader>a"] = "@parameter.inner",
-					},
-					swap_previous = {
-						["<leader>A"] = "@parameter.inner",
-					},
-				},
+				-- swap = {
+				-- 	enable = true,
+				-- 	-- Keymaps to swap parameters inside function
+				-- 	swap_next = {
+				-- 		["<leader>a"] = "@parameter.inner",
+				-- 	},
+				-- 	swap_previous = {
+				-- 		["<leader>A"] = "@parameter.inner",
+				-- 	},
+				-- },
 			},
 		})
 	end,

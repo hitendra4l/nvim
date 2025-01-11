@@ -1,29 +1,3 @@
--- return {
--- 	"scottmckendry/cyberdream.nvim",
--- 	lazy = false,
--- 	priority = 1000,
--- 	init = function()
--- 		vim.cmd.colorscheme("cyberdream")
--- 	end,
--- 	opts = {
--- 		transparent = true,
--- 		-- italic_comments = true,
--- 		-- hide_fillchars = true,
--- 		-- terminal_colors = true,
--- 		borderless_telescope = false,
--- 		extensions = {
--- 			telescope = false,
--- 		},
--- 		theme = {
--- 			variant = "auto",
--- 			overrides = function(t)
--- 				return { SmartOpenDirectory = { fg = t.grey } }
--- 			end,
--- 		},
--- 	}
--- }
-
-
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",
@@ -34,7 +8,14 @@ return {
 	opts = {
 		transparent_background = true,
 		-- no_italic = true,
-	}
+		-- color_overrides = {
+		-- 	mocha = {
+		-- 		base = "#000000",
+		-- 		mantle = "#000000",
+		-- 		crust = "#000000",
+		-- 	},
+		-- },
+	},
 }
 
 -- return {

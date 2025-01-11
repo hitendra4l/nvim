@@ -46,6 +46,9 @@ vim.opt.updatetime = 500
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- for obsidian markdown ui
+-- vim.opt.conceallevel = 1
+
 -- vim.opt.list = true
 -- vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
@@ -80,39 +83,11 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 	border = "rounded",
 })
 
----------------------------- border on diagnostics ------------------------------------
--- local api = vim.api
--- local diagnostic = vim.diagnostic
--- api.nvim_create_autocmd("CursorHold", {
--- 	callback = function()
--- 		local float_opts = {
--- 			focusable = false,
--- 			close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
--- 			border = "rounded",
--- 			source = "always", -- show source in diagnostic popup window
--- 			prefix = " ",
--- 		}
---
--- 		if not vim.b.diagnostics_pos then
--- 			vim.b.diagnostics_pos = { nil, nil }
--- 		end
---
--- 		local cursor_pos = api.nvim_win_get_cursor(0)
--- 		if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
--- 				and #diagnostic.get() > 0
--- 		then
--- 			diagnostic.open_float(nil, float_opts)
--- 		end
---
--- 		vim.b.diagnostics_pos = cursor_pos
--- 	end,
--- })
-
 vim.diagnostic.config({
 	float = { border = "rounded" },
 })
 
--- ---------------------- cursor in center near EOF ------------------------------
+---------------------- cursor in center near EOF ------------------------------
 vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter" }, {
 	group = vim.api.nvim_create_augroup("ScrollOffEOF", {}),
 	callback = function()

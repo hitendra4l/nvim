@@ -5,13 +5,28 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("i", "jj", "<Esc>")
 -- vim.keymap.set("n", "<leader>pv", ":Ex<CR>")
 
+-- easy access to black hole register
+vim.keymap.set({ "n", "v" }, "<leader>x", '"_d')
+
+-- easy navigation in line
+vim.keymap.set({ "n", "v", "o" }, "L", "$", { noremap = true, silent = true })
+vim.keymap.set({ "n", "v", "o" }, "H", "^", { noremap = true, silent = true })
+
+-- making surrounding more easy
+vim.keymap.set("o", "ir", "i[")
+vim.keymap.set("o", "ar", "a[")
+
+-- making redo as `U`: Originally U is used to undo last changed line
+vim.keymap.set("n", "U", "<C-r>")
+
 -- cut line in insert mode
 vim.keymap.set("i", "<C-x>", function()
 	vim.api.nvim_command("normal! dd")
 end, { noremap = true })
 
 -- select all made easy
-vim.keymap.set("n", "<C-a>", "ggVG")
+-- (<C-a> is for increasing a number and <C-x> is for decreasing a number)
+-- vim.keymap.set("n", "<C-a>", "ggVG")
 
 -- indent in viaual mode without losing selection
 vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true, silent = true })
@@ -19,12 +34,6 @@ vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickfix list" })
-
--- split window navigation
-vim.keymap.set("n", "<C-Left>", "<C-w>h")
-vim.keymap.set("n", "<C-Down>", "<C-w>j")
-vim.keymap.set("n", "<C-Up>", "<C-w>k")
-vim.keymap.set("n", "<C-Right>", "<C-w>l")
 
 -- split windows
 vim.keymap.set("n", "<leader>sv", "<cmd>vs<CR>")
@@ -34,8 +43,8 @@ vim.api.nvim_set_keymap("n", "<C-w>H", ":wincmd H<CR>:vertical resize 40<CR>", {
 -- Tab navigation
 vim.keymap.set("n", "<A-h>", ":tabprevious<CR>")
 vim.keymap.set("n", "<A-l>", ":tabnext<CR>")
-vim.keymap.set("n", "<A-Left>", ":-tabmove<CR>") -- Move tab left
-vim.keymap.set("n", "<A-Right>", ":+tabmove<CR>") -- Move tab right
+vim.keymap.set("n", "<A-Left>", ":-tabmove<CR>")
+vim.keymap.set("n", "<A-Right>", ":+tabmove<CR>")
 vim.keymap.set("n", "<A-w>", ":tabclose<CR>")
 
 -------------------- Move Lines -----------------------
@@ -52,10 +61,9 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
 ------------------- Navigate in wrapped lines ---------------
--- Combined normal and visual mode mappings
-vim.keymap.set({ "n", "v" }, "<Down>", "gj")
-vim.keymap.set({ "n", "v" }, "<Up>", "gk")
-
--- Insert mode mappings
-vim.keymap.set("i", "<Down>", "<C-o>gj")
-vim.keymap.set("i", "<Up>", "<C-o>gk")
+vim.keymap.set({ "n", "v", "i" }, "<Down>", function()
+	return vim.fn.mode() == "i" and "<C-o>gj" or "gj"
+end, { expr = true })
+vim.keymap.set({ "n", "v", "i" }, "<Up>", function()
+	return vim.fn.mode() == "i" and "<C-o>gk" or "gk"
+end, { expr = true })
