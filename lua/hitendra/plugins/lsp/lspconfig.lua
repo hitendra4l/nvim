@@ -216,6 +216,14 @@ return {
 			on_attach = on_attach,
 		})
 
+		lspconfig["protols"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			filetypes = { "proto" },
+			cmd = { "protols" },
+			root_markers = { "git" },
+		})
+
 		-- Angular Language Server configuration
 
 		local angularls_path = mason_registry.get_package("angular-language-server"):get_install_path()

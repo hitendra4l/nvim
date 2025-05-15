@@ -28,6 +28,7 @@ return {
 		----------------------------------------------------------------------------------------
 
 		cmp.setup({
+			preselect = cmp.PreselectMode.None,
 			completion = {
 				completeopt = "menu,menuone,preview,noselect",
 			},
@@ -47,9 +48,9 @@ return {
 
 				-- Accept the completion suggestion
 				-- ["<CR>"] = cmp.mapping.confirm({ select = true }),
-				["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-				-- navigate through available list of suggestions
+				["<CR>"] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace }),
 
+				-- navigate through available list of suggestions
 				["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
 				["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 

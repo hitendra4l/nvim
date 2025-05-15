@@ -17,6 +17,7 @@ return {
 				markdown = { "prettier" },
 				lua = { "stylua" },
 				python = { "black" },
+				proto = { "protols" },
 			},
 			format_on_save = {
 				-- if formatter is not available then format using lsp

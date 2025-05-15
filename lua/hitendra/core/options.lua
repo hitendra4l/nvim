@@ -25,9 +25,10 @@ vim.o.linebreak = true
 vim.opt.showmode = false
 
 -- make system clipboard and yank register same
-vim.schedule(function()
-	vim.opt.clipboard = "unnamedplus"
-end)
+-- use "+y and "+p
+-- vim.schedule(function()
+-- 	vim.opt.clipboard = "unnamedplus"
+-- end)
 
 -- Save undo history
 vim.opt.undofile = true
